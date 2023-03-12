@@ -1,8 +1,19 @@
+// pipeline {
+//     agent any
+//     stages {
+//         stage('Build image') {
+//             steps {
+//                 sh 'docker build -t todo: .'
+//             }
+//         }
 pipeline {
     agent any
+    
     stages {
-        stage('Build image') {
+        stage('Hello World') {
             steps {
-                sh 'docker build -t todo: .'
+                echo 'Hello World'
             }
         }
+    }
+}
