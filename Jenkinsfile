@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Build image') {
             steps {
-                sh 'sudo docker build -t todo: .'
-                sh 'sudo docker images'
+                sh 'docker build -t todo: .'
+                sh 'docker images'
             }
         }
     }    
