@@ -7,5 +7,6 @@ pipeline {
                 sh 'sudo docker images'
             }
         }
+    }    
             
 }
