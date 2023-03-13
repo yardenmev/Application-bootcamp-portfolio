@@ -31,7 +31,7 @@ pipeline {
         //     echo "The containerized application is running successfully"
         //   } else {
         //     error "The containerized application is not running"
-          }
+        //   }
         }
       }
     }
