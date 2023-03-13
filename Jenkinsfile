@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent {label 'yarden-ec2'}
 
     stages {
         stage('Build') {
