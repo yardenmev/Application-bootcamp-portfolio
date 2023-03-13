@@ -7,7 +7,7 @@ pipeline {
             // docer compose up
             script {
                 sh 'docker compose up -d'
-                sleep 10 // Wait for the containerized application to start up
+                sleep 5 // Wait for the containerized application to start up
                 }
 
                 // Check if MongoDB is running
@@ -37,7 +37,7 @@ pipeline {
                     // }
 
                     // Get list of tasks
-                    def tasks = sh(script: 'curl http://localhost:5000/api', returnStdout: true).trim()
+                    def tasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
 
                     // Test PUT endpoint
                     sh 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"'
@@ -60,13 +60,15 @@ pipeline {
             }
         }    
     }
-}
 
-post {
-    always {
-        // Bring containers down
-        sh 'docker-compose down'
+
+    post {
+        always {
+            // Bring containers down
+            sh 'docker-compose down'
+        }
     }
+
 }
 
 
