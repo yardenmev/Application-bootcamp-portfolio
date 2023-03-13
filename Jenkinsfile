@@ -2,35 +2,35 @@ pipeline {
   agent {label 'yarden-ec2'}
 
     stages {
-        stage('Build') {
-        steps {
-            // docer compose up
-            script {
-                sh 'docker compose up -d'
-                sleep 5 // Wait for the containerized application to start up
-                }
-
-                // Check if MongoDB is running
-                // script {
-                //   def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
-                //   if (response.contains("HTTP/1.1 200 OK")) {
-                //     echo "The TODO application is running successfully"
-                //   } else {
-                //     error "The TODO application is not running"
-                //   }
-                // }
+        stage('version number calculation') {
+            when{
+                branch 'main'
+            }
+            steps{
+                sh "echo ${env.GIT_COMMIT}"
+                sh "echo ${env.GIT_BRANCH}"
             }
         }
-        stage('Test API') {
+
+        stage('Build') {
+            steps {
+                // docer compose up
+                script {
+                    sh 'docker compose up -d'
+                    sleep 5 // Wait for the containerized application to start up
+                }
+            }
+
+        stage('Test APP & API') {
             steps {
                 script {
                     // Test if APP is responsive
                     def curl = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
                     if (curl.contains("HTTP/1.1 200 OK")) {
                     echo "The TODO application is running successfully"
-                  } else {
+                    } else {
                     error "The TODO application is not running successfully"
-                  }
+                    }
 
                     // Test ADD endpoint
                     def ADD = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
@@ -40,7 +40,7 @@ pipeline {
                     error "The ADD API  is not running successfully"
                     }
 
-                    // Get list of tasks
+                    // Test Get list of tasks
                     def GET = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true)
                     if (GET.contains('["test"]')) {
                     echo "The GET API  is running successfully"
@@ -48,7 +48,7 @@ pipeline {
                     error "The GET API  is not running successfully"
                     }
 
-                    // Test PUT(edit)endpoint
+                    // Test PUT(edit) endpoint
                     def EDIT = sh script: 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"', returnStdout: true
                     if (EDIT.contains('{"new_task":"edit-test","old_task":"test"}')) {
                     echo "The EDIT API  is running successfully"
