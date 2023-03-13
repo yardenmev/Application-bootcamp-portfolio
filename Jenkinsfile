@@ -10,7 +10,10 @@ pipeline {
                 sh "echo ${env.GIT_COMMIT}"
                 sh "echo ${env.GIT_BRANCH}"
             }
-        }
+        }  
+          
+    }
+
 
         stage('Build') {
             steps {
@@ -20,6 +23,7 @@ pipeline {
                     sleep 5 // Wait for the containerized application to start up
                 }
             }
+        }
 
         stage('Test APP & API') {
             steps {
