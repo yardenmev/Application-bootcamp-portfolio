@@ -41,7 +41,12 @@ pipeline {
                     }
 
                     // Get list of tasks
-                    def tasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
+                    def GET = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true)
+                    if (GET.contains('["test"]')) {
+                    echo "The GET API  is running successfully"
+                    } else {
+                    error "The GET API  is not running successfully"
+                    }
 
                     // Test PUT(edit)endpoint
                     def EDIT = sh script: 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"', returnStdout: true
