@@ -23,11 +23,7 @@ pipeline {
         }
         stage('Test API') {
             steps {
-                // docer compose up
                 script {
-                    sh 'docker-compose up -d'
-                    sleep 10 // Wait for the containerized application to start up
-                    
                     // Test if API is responsive
                     sh 'curl --silent --fail -I http://34.240.82.35:5555/'
                     if (sh.returnStatus != 0) {
