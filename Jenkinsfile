@@ -65,7 +65,7 @@ pipeline {
     post {
         always {
             // Bring containers down
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
     }
 
