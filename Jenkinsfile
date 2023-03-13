@@ -24,7 +24,7 @@ pipeline {
         stage('Test API') {
             steps {
                 script {
-                    // Test if API is responsive
+                    // Test if APP is responsive
                     def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
                     if (response.contains("HTTP/1.1 200 OK")) {
                     echo "The TODO application is running successfully"
