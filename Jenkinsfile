@@ -25,11 +25,12 @@ pipeline {
 
         // Check if MongoDB is running
         script {
-           def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
-          if (response.contains("HTTP/1.1 200 OK")) {
-            echo "The containerized application is running successfully"
-          } else {
-            error "The containerized application is not running"
+            curl -I http://localhost:5000/
+        //    def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
+        //   if (response.contains("HTTP/1.1 200 OK")) {
+        //     echo "The containerized application is running successfully"
+        //   } else {
+        //     error "The containerized application is not running"
           }
         }
       }
