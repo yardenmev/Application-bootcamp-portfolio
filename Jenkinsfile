@@ -32,7 +32,7 @@ pipeline {
                     error "The TODO application is not running successfully"
                   }
 
-                    // Test POST endpoint
+                    // Test ADD endpoint
                     def ADD = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
                     if (ADD.contains('{"task":"test"}')) {
                     echo "The ADD API  is running successfully"
@@ -44,11 +44,11 @@ pipeline {
                     def tasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
 
                     // Test PUT(edit)endpoint
-                    def PUT = sh script: 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"', returnStdout: true
-                    if (PUT.contains('{"task":"test"}')) {
-                    echo "The PUT API  is running successfully"
+                    def EDIT = sh script: 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"', returnStdout: true
+                    if (EDIT.contains('{"new_task":"edit-test","old_task":"test"}')) {
+                    echo "The EDIT API  is running successfully"
                     } else {
-                    error "The PUT API  is not running successfully"
+                    error "The EDIT API  is not running successfully"
                     }
 
                     // Test DELETE endpoint
