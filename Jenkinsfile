@@ -31,7 +31,7 @@ pipeline {
                     }
 
                     // Test POST endpoint
-                    sh 'curl -d "task=test" -X POST http://localhost:5000/api/add'
+                    sh 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add'
                     // if (sh.returnStatus != 0) {
                     //     error('POST request failed')
                     // }
@@ -40,19 +40,19 @@ pipeline {
                     def tasks = sh(script: 'curl http://localhost:5000/api', returnStdout: true).trim()
 
                     // Test PUT endpoint
-                    sh 'curl -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"'
+                    sh 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"'
                     // if (sh.returnStatus != 0) {
                     //     error('PUT request failed')
                     // }
 
                     // Test DELETE endpoint
-                    sh 'curl -X POST http://localhost:5000/api/delete -d "task=edit-test"'
+                    sh 'curl --silent -X POST http://localhost:5000/api/delete -d "task=edit-test"'
                     // if (sh.returnStatus != 0) {
                     //     error('DELETE request failed')
                     // }
 
                     // Check if task was deleted
-                    def updatedTasks = sh(script: 'curl http://localhost:5000/api', returnStdout: true).trim()
+                    def updatedTasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
                     // if (tasks == updatedTasks) {
                     //     error('Task was not deleted')
                     // }
