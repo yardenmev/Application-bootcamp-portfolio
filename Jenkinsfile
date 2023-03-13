@@ -1,18 +1,18 @@
 pipeline {
-  agent {label 'yarden-ec2'}
+    agent {label 'yarden-ec2'}
 
-    stages {
-        stage('version number calculation') {
-            when{
-                branch 'main'
-            }
-            steps{
-                sh "echo ${env.GIT_COMMIT}"
-                sh "echo ${env.GIT_BRANCH}"
-            }
-        }  
-          
-    }
+        stages {
+            stage('version number calculation') {
+                when{
+                    branch 'main'
+                }
+                steps{
+                    sh "echo ${env.GIT_COMMIT}"
+                    sh "echo ${env.GIT_BRANCH}"
+                }
+            }  
+            
+        }
 
 
         stage('Build') {
