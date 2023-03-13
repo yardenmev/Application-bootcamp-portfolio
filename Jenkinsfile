@@ -37,7 +37,7 @@ pipeline {
                     // }
 
                     // Get list of tasks
-                    def tasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
+                    def tasks = sh(script: 'curl  http://localhost:5000/api', returnStdout: true).trim()
 
                     // Test PUT endpoint
                     sh 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"'
@@ -52,7 +52,7 @@ pipeline {
                     // }
 
                     // Check if task was deleted
-                    def updatedTasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
+                    def updatedTasks = sh(script: 'curl http://localhost:5000/api', returnStdout: true).trim()
                     // if (tasks == updatedTasks) {
                     //     error('Task was not deleted')
                     // }
