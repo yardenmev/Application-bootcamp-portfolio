@@ -25,16 +25,18 @@ pipeline {
             steps {
                 script {
                     // Test if APP is responsive
-                    def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
-                    if (response.contains("HTTP/1.1 200 OK")) {
+                    def curl = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
+                    if (curl.contains("HTTP/1.1 200 OK")) {
                     echo "The TODO application is running successfully"
-                    }
+                  } else {
+                    error "The TODO application is not running"
+                  }
 
                     // Test POST endpoint
-                    sh 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add'
-                    // if (sh.returnStatus != 0) {
-                    //     error('POST request failed')
-                    // }
+                    def POST = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
+                    if (POST.contains("{"task":"test"}")) {
+                    echo "The POST API  is running successfully"
+                    }
 
                     // Get list of tasks
                     def tasks = sh(script: 'curl  http://localhost:5000/api', returnStdout: true).trim()
