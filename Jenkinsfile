@@ -26,7 +26,7 @@ pipeline {
 
         // Check if MongoDB is running
         script {
-          def response = sh script: 'curl --silent --fail -I http://34.240.82.35:5000/', returnStdout: true
+          def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
           if (response.contains("HTTP/1.1 200 OK")) {
             echo "The TODO application is running successfully"
           } else {
