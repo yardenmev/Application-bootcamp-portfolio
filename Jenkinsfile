@@ -29,14 +29,16 @@ pipeline {
                     if (curl.contains("HTTP/1.1 200 OK")) {
                     echo "The TODO application is running successfully"
                   } else {
-                    error "The TODO application is not running"
+                    error "The TODO application is not running successfully"
                   }
 
                     // Test POST endpoint
                     def POST = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
-                    if (POST.contains('{"task":"test"}')) {
+                    if (POST.contains('{"task":"te111st"}')) {
                     echo "The POST API  is running successfully"
-                    }
+                    } else {
+                    error "The POST API  is not running successfully"
+                  }
 
                     // Get list of tasks
                     def tasks = sh(script: 'curl  http://localhost:5000/api', returnStdout: true).trim()
