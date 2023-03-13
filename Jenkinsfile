@@ -6,7 +6,7 @@ pipeline {
         steps {
             // docer compose up
             script {
-                sh 'docker-compose up -d'
+                sh 'docker compose up -d'
                 sleep 10 // Wait for the containerized application to start up
                 }
 
