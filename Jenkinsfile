@@ -25,9 +25,9 @@ pipeline {
             steps {
                 script {
                     // Test if API is responsive
-                    sh 'curl --silent --fail -I http://localhost:5000/'
-                    if (sh.returnStatus != 0) {
-                        error('API did not respond')
+                    def response = sh script: 'curl --silent --fail -I http://localhost:5000/', returnStdout: true
+                    if (response.contains("HTTP/1.1 200 OK")) {
+                    echo "The TODO application is running successfully"
                     }
 
                     // Test POST endpoint
