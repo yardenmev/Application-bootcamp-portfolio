@@ -11,7 +11,7 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 5000
-EXPOSE 5000
+EXPOSE 5555
 
 # Set the default command to run when the container starts
 CMD ["python3", "todo.py"]
