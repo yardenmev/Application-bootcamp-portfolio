@@ -33,33 +33,31 @@ pipeline {
                   }
 
                     // Test POST endpoint
-                    def POST = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
-                    if (POST.contains('{"task":"te111st"}')) {
-                    echo "The POST API  is running successfully"
+                    def ADD = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
+                    if (ADD.contains('{"task":"test"}')) {
+                    echo "The ADD API  is running successfully"
                     } else {
-                    error "The POST API  is not running successfully"
-                  }
+                    error "The ADD API  is not running successfully"
+                    }
 
                     // Get list of tasks
-                    def tasks = sh(script: 'curl  http://localhost:5000/api', returnStdout: true).trim()
+                    def tasks = sh(script: 'curl --silent http://localhost:5000/api', returnStdout: true).trim()
 
-                    // Test PUT endpoint
-                    sh 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"'
-                    // if (sh.returnStatus != 0) {
-                    //     error('PUT request failed')
-                    // }
+                    // Test PUT(edit)endpoint
+                    def PUT = sh script: 'curl --silent -X PUT http://localhost:5000/api/edit -d "old_task=test&new_task=edit-test"', returnStdout: true
+                    if (PUT.contains('{"task":"test"}')) {
+                    echo "The PUT API  is running successfully"
+                    } else {
+                    error "The PUT API  is not running successfully"
+                    }
 
                     // Test DELETE endpoint
-                    sh 'curl --silent -X POST http://localhost:5000/api/delete -d "task=edit-test"'
-                    // if (sh.returnStatus != 0) {
-                    //     error('DELETE request failed')
-                    // }
-
-                    // Check if task was deleted
-                    def updatedTasks = sh(script: 'curl http://localhost:5000/api', returnStdout: true).trim()
-                    // if (tasks == updatedTasks) {
-                    //     error('Task was not deleted')
-                    // }
+                    def DELETE = sh script: 'curl --silent -X POST http://localhost:5000/api/delete -d "task=edit-test"', returnStdout: true
+                    if (DELETE.contains('{"task":"edit-test"}')) {
+                    echo "The DELETE API  is running successfully"
+                    } else {
+                    error "The DELETE API  is not running successfully"
+                    }
                 }
             }
         }    
