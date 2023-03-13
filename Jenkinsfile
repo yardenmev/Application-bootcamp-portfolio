@@ -51,6 +51,13 @@ pipeline {
     stages {
         stage('Test API') {
             steps {
+                stage('Build and Test') {
+            steps {
+                // docer compose up
+                script {
+                sh 'docker-compose up -d'
+                sleep 10 // Wait for the containerized application to start up
+                }
                 script {
                     // Test if API is responsive
                     sh 'curl --silent --fail -I http://34.240.82.35:5000/'
@@ -88,4 +95,11 @@ pipeline {
             }
         }
     }
+}
+post {
+    always {
+      // Bring containers down
+      sh 'docker-compose down'
+    }
+  }
 }
