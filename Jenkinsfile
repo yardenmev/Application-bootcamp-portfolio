@@ -34,7 +34,7 @@ pipeline {
 
                     // Test POST endpoint
                     def POST = sh script: 'curl --silent -d "task=test" -X POST http://localhost:5000/api/add', returnStdout: true
-                    if (POST.contains("{"task":"test"}")) {
+                    if (POST.contains('{"task":"test"}')) {
                     echo "The POST API  is running successfully"
                     }
 
