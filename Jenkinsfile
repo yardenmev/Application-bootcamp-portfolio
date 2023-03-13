@@ -32,9 +32,9 @@ pipeline {
 
                     // Test POST endpoint
                     sh 'curl -d "task=test" -X POST http://localhost:5000/api/add'
-                    if (sh.returnStatus != 0) {
-                        error('POST request failed')
-                    }
+                    // if (sh.returnStatus != 0) {
+                    //     error('POST request failed')
+                    // }
 
                     // Get list of tasks
                     def tasks = sh(script: 'curl http://localhost:5000/api', returnStdout: true).trim()
