@@ -102,4 +102,3 @@ post {
       sh 'docker-compose down'
     }
   }
-}
