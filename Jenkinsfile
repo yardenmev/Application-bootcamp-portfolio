@@ -1,5 +1,8 @@
 pipeline {
     agent {label 'yarden-ec2'}
+        environment { 
+        IMAGE_NAME = 'todo'
+        }
 
         stages {
             stage('version number calculation') {
@@ -7,10 +10,16 @@ pipeline {
                     branch 'main'
                 }
                 steps{
-                    sh "echo ${env.GIT_COMMIT}"
-                    sh "echo ${env.GIT_BRANCH}"
-                }
-            }  
+                    sshagent(['yarden-github-ssh']) {
+                        script{
+                            tag = sh ( 
+                            script: "sh tag-search.sh",
+                            returnStdout: true
+                            ).trim()
+                            echo "${tag}"
+                        }
+                    }
+                }  
             
             stage('docker compose') {
                 steps {
