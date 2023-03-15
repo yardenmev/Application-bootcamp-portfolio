@@ -14,7 +14,7 @@ pipeline {
                 //     branch 'main'
                 // }
                 steps{
-                    sshagent(credentials : ['yarden-github-ssh']) {
+                    sshagent(credentials: ['yarden-github-ssh']) {
                         script{
                             tag = sh ( 
                             script: "sh tag-search.sh",
@@ -92,7 +92,7 @@ pipeline {
                     branch 'main'
                 }
                 steps{
-                    sshagent(credentials : ['yarden-github-ssh']) {
+                    sshagent(credentials: ['yarden-github-ssh']) {
                         sh "git tag ${tag}"
                         sh "git push origin ${tag}"
                     }
