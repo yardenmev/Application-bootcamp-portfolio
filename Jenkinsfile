@@ -88,6 +88,7 @@ pipeline {
                         sh "git push origin ${tag}"
                     }
                 }  
+            }
 
             stage('push image') {
                 steps {
@@ -101,8 +102,6 @@ pipeline {
             }
         }
     
-
-
     post {
         always {
             // Bring containers down
