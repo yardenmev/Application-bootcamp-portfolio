@@ -94,7 +94,7 @@ pipeline {
                 steps{
                     sshagent(['yarden-github-ssh']) {
                         sh "git tag ${tag}"
-                        sh "git push origin ${tag}"
+                        sh "git push origin --tags"
                     }
                 }  
             }
