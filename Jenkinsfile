@@ -72,9 +72,9 @@ pipeline {
                 steps {
                     sh '''
                       aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 644435390668.dkr.ecr.us-east-2.amazonaws.com
-                      docker build -t todo .
-                      docker tag todo:latest 644435390668.dkr.ecr.us-east-2.amazonaws.com/todo:latest
-                      docker push 644435390668.dkr.ecr.us-east-2.amazonaws.com/todo:latest
+                      docker build -t yarden-todo:latest .
+                      docker tag todo:latest 644435390668.dkr.ecr.us-east-2.amazonaws.com/yarden-todo:latest
+                      docker push 644435390668.dkr.ecr.us-east-2.amazonaws.com/yarden-todo:latest
                     '''
                 } 
             }
