@@ -19,7 +19,8 @@ pipeline {
                             echo "${tag}"
                         }
                     }
-                }  
+                } 
+            } 
 
             stage('docker compose') {
                 steps {
