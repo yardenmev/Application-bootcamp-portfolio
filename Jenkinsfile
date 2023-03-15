@@ -16,7 +16,7 @@ pipeline {
                             script: "sh tag-search.sh",
                             returnStdout: true
                             ).trim()
-                            echo "${tag}"
+                            echo "the new git tag is: ${tag}"
                         }
                     }
                 } 
