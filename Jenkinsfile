@@ -10,9 +10,9 @@ pipeline {
 
         stages {
             stage('version number calculation') {
-                when{
-                    branch 'main'
-                }
+                // when{
+                //     branch 'main'
+                // }
                 steps{
                     sshagent(['yarden-github-ssh']) {
                         script{
