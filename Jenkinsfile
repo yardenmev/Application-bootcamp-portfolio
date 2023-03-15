@@ -1,8 +1,12 @@
 pipeline {
-    agent any // {label 'yarden-ec2'}
+    agent  {label 'yarden-ec2'}
         environment { 
-        IMAGE_NAME = 'todo'
+            IMAGE_NAME = 'todo'
         }
+        parameters {
+            booleanParam(name: 'docker-compose', defaultValue: false, description: 'Check to docker compose up.')
+            booleanParam(name: 'testing', defaultValue: false, description: 'Check for testing.')
+            }
 
         stages {
             stage('version number calculation') {
@@ -23,8 +27,10 @@ pipeline {
             } 
 
             stage('docker compose') {
+                when {
+                    expression { !params.docker-compose }
+                    }
                 steps {
-                    // docer compose up
                     script {
                         sh 'docker-compose up -d'
                         sleep 5 // Wait for the containerized application to start up
@@ -33,6 +39,9 @@ pipeline {
             }
 
             stage('Test APP & API') {
+                when {
+                    expression { !params.testing }
+                    }
                 steps {
                     script {
                         // Test if APP is responsive
