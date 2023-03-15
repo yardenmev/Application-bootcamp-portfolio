@@ -14,7 +14,7 @@ pipeline {
                 //     branch 'main'
                 // }
                 steps{
-                    sshagent(['yarden-github-ssh']) {
+                    sshagent(credentials : ['yarden-github-ssh']) {
                         script{
                             tag = sh ( 
                             script: "sh tag-search.sh",
@@ -32,7 +32,7 @@ pipeline {
                     }
                 steps {
                     script {
-                        sh 'docker-compose up -d'
+                        sh 'docker compose up -d'
                         sleep 5 // Wait for the containerized application to start up
                     }
                 }
@@ -92,9 +92,9 @@ pipeline {
                     branch 'main'
                 }
                 steps{
-                    sshagent(['yarden-github-ssh']) {
+                    sshagent(credentials : ['yarden-github-ssh']) {
                         sh "git tag ${tag}"
-                        sh "git push origin --tags"
+                        sh "git push origin ${tag}"
                     }
                 }  
             }
@@ -114,7 +114,7 @@ pipeline {
     post {
         always {
             // Bring containers down
-            sh 'docker-compose down'
+            sh 'docker compose down'
         }
     }
 }
