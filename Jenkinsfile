@@ -26,7 +26,7 @@ pipeline {
                 } 
             } 
 
-            stage('docker-compose') {
+            stage('docker compose') {
                 when {
                     expression { !params.docker-compose }
                     }
