@@ -9,7 +9,7 @@ pipeline {
             }
 
         stages {
-            stage('version number calculation') {
+            stage('version number calculation.') {
                 // when{
                 //     branch 'main'
                 // }
