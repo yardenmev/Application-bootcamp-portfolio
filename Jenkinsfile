@@ -92,11 +92,10 @@ pipeline {
                     branch 'main'
                 }
                 steps{
-                     git credentialsId: 'yarden-git-addpass', url: 'https://github.com/yardenmev/Application-bootcamp-portfolio.git', branch: 'main'
-                    // sshagent(credentials: ['yarden-github-ssh']) {
+                    sshagent(credentials: ['yarden-github-ssh']) {
                         sh "git tag ${tag}"
                         sh "git push origin ${tag}"
-                    // }
+                    }
                 }  
             }
 
