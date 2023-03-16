@@ -8,23 +8,23 @@ pipeline {
             booleanParam(name: 'testing', defaultValue: false, description: 'Check for testing.')
             }
 
-        // stages {
-        //     stage('version number calculation.') {
-        //         // when{
-        //         //     branch 'main'
-        //         // }
-        //         steps{
-        //             sshagent(credentials: ['yarden-github-ssh']) {
-        //                 script{
-        //                     tag = sh ( 
-        //                     script: "sh tag-search.sh",
-        //                     returnStdout: true
-        //                     ).trim()
-        //                     echo "the new git tag is: ${tag}"
-        //                 }
-        //             }
-        //         } 
-        //     } 
+        stages {
+            stage('version number calculation.') {
+                // when{
+                //     branch 'main'
+                // }
+                steps{
+                    sshagent(credentials: ['yarden-github-ssh']) {
+                        script{
+                            tag = sh ( 
+                            script: "sh tag-search.sh",
+                            returnStdout: true
+                            ).trim()
+                            echo "the new git tag is: ${tag}"
+                        }
+                    }
+                } 
+            } 
 
             stage('docker-compose') {
                 when {
