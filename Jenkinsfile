@@ -112,6 +112,9 @@ pipeline {
         }
     
     post {
+        when {
+            expression { !params.docker-compose }
+        }
         always {
             // Bring containers down
             sh 'docker compose down'
