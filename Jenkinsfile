@@ -21,7 +21,7 @@ pipeline {
                             returnStdout: true
                             ).trim()
                             echo "the new git tag is: ${tag}"
-                        // }
+                        }
                     }
                 } 
             } 
