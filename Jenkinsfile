@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'yarden-ec2'}
+    agent {label 'Agent danielm-ec2'}
         environment { 
             IMAGE_NAME = 'todo'
         }
