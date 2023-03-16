@@ -87,18 +87,17 @@ pipeline {
             //     }
             // }
 
-            stage('Git tag') {
-                when{
-                    branch 'main'
-                }
-                steps{
-                    sshagent(credentials: ['yarden-github-ssh']) {
+            stage('Git tag') { 
+                // when {
+                //     branch 'develop'
+                // }
+                steps {
+                    sshagent(['yarden-github-ssh']) {
                         sh "git tag ${tag}"
                         sh "git push origin ${tag}"
                     }
-                }  
+                }
             }
-
             stage('push image') {
                 steps {
                     sh """
