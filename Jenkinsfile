@@ -28,7 +28,7 @@ pipeline {
 
             stage('docker-compose') {
                 when {
-                    expression { !params.docker-compose }
+                    expression { params.docker-compose }
                     }
                 steps {
                     script {
@@ -40,7 +40,7 @@ pipeline {
 
             stage('Test APP & API') {
                 when {
-                    expression { !params.testing }
+                    expression { params.testing }
                     }
                 steps {
                     script {
@@ -112,9 +112,6 @@ pipeline {
         }
     
     post {
-        when {
-            expression { !params.docker-compose }
-        }
         always {
             // Bring containers down
             sh 'docker compose down'
