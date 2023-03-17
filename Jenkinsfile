@@ -115,7 +115,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                // sh 'mkdir -p GitOps'
+                sh 'mkdir -p GitOps'
                 dir("GitOps"){
                     git branch: "main",
                     credentialsId: 'yarden-github-ssh',
