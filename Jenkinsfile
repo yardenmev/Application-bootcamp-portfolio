@@ -108,31 +108,35 @@ pipeline {
                     """
                 } 
             }
-        }
+        
 
-        stage('update tag in GitOps repo') { 
-            when {
-                branch 'main'
-            }
-            steps {
-                sh 'mkdir -p GitOps'
-                dir("GitOps"){
-                    git branch: "main",
-                    credentialsId: 'yarden-github-ssh',
-                    url: 'git@github.com:yardenmev/GitOps-bootcamp-portfolio.git'
-                    sshagent(['yarden-github-ssh']) {
-                        sh 'git log --graph --all'
-                        sh "sed -r -i \"s/tag:.*/tag: ${IMAGE_NAME}-${tag}/\" todo-chart/values.yaml"
-                        sh "git status"
-                        sh "git add -A"
-                        sh "git status"
-                        sh "git commit -m \"update TAG ver\""
-                        sh "git status"
-                        sh "git push origin main"
+            stage('update tag in GitOps repo') { 
+                when {
+                    branch 'main'
+                }
+                steps {
+                    sh 'mkdir -p GitOps'
+                    dir("GitOps"){
+                        git branch: "main",
+                        credentialsId: 'yarden-github-ssh',
+                        url: 'git@github.com:yardenmev/GitOps-bootcamp-portfolio.git'
+                        sshagent(['yarden-github-ssh']) {
+                            sh 'git log --graph --all'
+                            sh "sed -r -i \"s/tag:.*/tag: ${IMAGE_NAME}-${tag}/\" todo-chart/values.yaml"
+                            sh "git status"
+                            sh "git add -A"
+                            sh "git status"
+                            sh "git commit -m \"update TAG ver\""
+                            sh "git status"
+                            sh "git push origin main"
+                        }
                     }
                 }
             }
+
         }
+        
+    
 
 
     
