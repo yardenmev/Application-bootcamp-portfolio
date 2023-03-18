@@ -4,7 +4,7 @@ FROM python:3.12.0a6-slim
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy all files next to the Dockerfile into the image
+# Copy all files next to the Dockerfile into the image.
 COPY . /app
 
 # Install required packages from requirements.txt
