@@ -14,7 +14,7 @@ pipeline {
                     branch 'main'
                 }
                 steps{
-                    sshagent(credentials: ['yarden-github-ssh']) {
+                    // sshagent(credentials: ['yarden-github-ssh']) {
                         script{
                             tag = sh ( 
                             script: "sh tag-search.sh",
@@ -22,7 +22,7 @@ pipeline {
                             ).trim()
                             echo "the new git tag is: ${tag}"
                         }
-                    }
+                    // }
                 } 
             } 
 
