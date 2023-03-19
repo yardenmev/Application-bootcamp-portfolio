@@ -121,13 +121,9 @@ pipeline {
                         credentialsId: 'yarden-github-ssh',
                         url: 'git@github.com:yardenmev/GitOps-bootcamp-portfolio.git'
                         sshagent(['yarden-github-ssh']) {
-                            sh 'git log --graph --all'
                             sh "sed -r -i \"s/tag:.*/tag: ${IMAGE_NAME}-${tag}/\" todo-chart/values.yaml"
-                            sh "git status"
                             sh "git add -A"
-                            sh "git status"
                             sh "git commit -m \"update TAG ver\""
-                            sh "git status"
                             sh "git push origin main"
                         }
                     }
@@ -140,12 +136,12 @@ pipeline {
 
 
     
-    // post {
-    //     always {
-    //         // Bring containers down
-    //         sh 'docker compose down'
-    //     }
-    // }
+    post {
+        always {
+            // Bring containers down
+            sh 'docker compose down'
+        }
+    }
 }
 
 
