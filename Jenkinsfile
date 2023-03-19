@@ -121,7 +121,7 @@ pipeline {
                         credentialsId: 'yarden-github-ssh',
                         url: 'git@github.com:yardenmev/GitOps-bootcamp-portfolio.git'
                         sshagent(['yarden-github-ssh']) {
-                            sh "sed -r -i \"s/tag:.*/tag: ${IMAGE_NAME}-${tag}/\" todo-chart/values.yaml"
+                            sh "sed -r -i \"s/tag:.*/tag: ${tag}/\" todo-chart/values.yaml"
                             sh "git add -A"
                             sh "git commit -m \"update TAG ver: ${tag}\""
                             sh "git push origin main"
