@@ -4,7 +4,7 @@ pipeline {
             IMAGE_NAME = 'todo'
         }
         parameters {
-            booleanParam(name: 'docker-compose', defaultValue: false, description: 'Check to docker compose up.')
+            booleanParam(name: 'docker_compose', defaultValue: false, description: 'Check to docker compose up.')
             booleanParam(name: 'testing', defaultValue: false, description: 'Check for testing.')
             }
 
@@ -28,7 +28,7 @@ pipeline {
 
             stage('docker-compose') {
                 when {
-                    expression { ! params.docker-compose }
+                    expression { params.docker_compose }
                     }
                 steps {
                     script {
