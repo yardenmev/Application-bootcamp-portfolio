@@ -88,9 +88,9 @@ pipeline {
             }
 
             stage('Git tag') { 
-                // when {
-                //     branch 'develop'
-                // }
+                when {
+                    branch 'main'
+                }
                 steps {
                     sshagent(['yarden-github-ssh']) {
                         sh "git tag ${tag}"
