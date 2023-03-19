@@ -1,20 +1,20 @@
 pipeline {
-    agent  {label 'yarden-ec2'}
+    agent {label 'yarden-ec2'}
         environment { 
             IMAGE_NAME = 'todo'
         }
         parameters {
-            booleanParam(name: 'docker-compose', defaultValue: false, description: 'Check to docker compose up.')
+            booleanParam(name: 'docker_compose', defaultValue: false, description: 'Check to docker compose up.')
             booleanParam(name: 'testing', defaultValue: false, description: 'Check for testing.')
             }
 
         stages {
-            stage('version number calculation') {
-                // when{
-                //     branch 'main'
-                // }
+            stage('version number calculation.') {
+                when{
+                    branch 'main'
+                }
                 steps{
-                    sshagent(['yarden-github-ssh']) {
+                    // sshagent(credentials: ['yarden-github-ssh']) {
                         script{
                             tag = sh ( 
                             script: "sh tag-search.sh",
@@ -22,17 +22,17 @@ pipeline {
                             ).trim()
                             echo "the new git tag is: ${tag}"
                         }
-                    }
+                    // }
                 } 
             } 
 
-            stage('docker compose') {
+            stage('docker-compose') {
                 when {
-                    expression { !params.docker-compose }
+                    expression { params.docker_compose }
                     }
                 steps {
                     script {
-                        sh 'docker-compose up -d'
+                        sh 'docker compose up -d'
                         sleep 5 // Wait for the containerized application to start up
                     }
                 }
@@ -40,7 +40,7 @@ pipeline {
 
             stage('Test APP & API') {
                 when {
-                    expression { !params.testing }
+                    expression { params.testing }
                     }
                 steps {
                     script {
@@ -87,18 +87,17 @@ pipeline {
                 }
             }
 
-            stage('Git tag') {
-                when{
+            stage('Git tag') { 
+                when {
                     branch 'main'
                 }
-                steps{
+                steps {
                     sshagent(['yarden-github-ssh']) {
                         sh "git tag ${tag}"
                         sh "git push origin ${tag}"
                     }
-                }  
+                }
             }
-
             stage('push image') {
                 steps {
                     sh """
@@ -109,7 +108,33 @@ pipeline {
                     """
                 } 
             }
+        
+
+            stage('update tag in GitOps repo') { 
+                when {
+                    branch 'main'
+                }
+                steps {
+                    sh 'mkdir -p GitOps'
+                    dir("GitOps"){
+                        git branch: "main",
+                        credentialsId: 'yarden-github-ssh',
+                        url: 'git@github.com:yardenmev/GitOps-bootcamp-portfolio.git'
+                        sshagent(['yarden-github-ssh']) {
+                            sh "sed -r -i \"s/tag:.*/tag: ${tag}/\" todo-chart/values.yaml"
+                            sh "git add -A"
+                            sh "git commit -m \"update TAG ver: ${tag}\""
+                            sh "git push origin main"
+                        }
+                    }
+                }
+            }
+
         }
+        
+    
+
+
     
     post {
         always {
