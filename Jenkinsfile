@@ -140,12 +140,12 @@ pipeline {
 
 
     
-    post {
-        always {
-            // Bring containers down
-            sh 'docker compose down'
-        }
-    }
+    // post {
+    //     always {
+    //         // Bring containers down
+    //         sh 'docker compose down'
+    //     }
+    // }
 }
 
 
