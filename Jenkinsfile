@@ -28,7 +28,7 @@ pipeline {
 
             stage('docker-compose') {
                 when {
-                    expression { params.docker-compose }
+                    expression { ! params.docker-compose }
                     }
                 steps {
                     script {
